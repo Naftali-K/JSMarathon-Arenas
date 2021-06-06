@@ -20,7 +20,7 @@ window.onload = () => {
 const player1 = {
     player: 1,
     name: "Scorpion",
-    hp: 50,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
     weapon: ["Sword", "Gun"],
     attack: () => {
@@ -31,7 +31,7 @@ const player1 = {
 const player2 = {
     player: 2,
     name: "Liu Kang",
-    hp: 80,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/liukang.gif",
     weapon: ["Sword", "Gun"],
     attack: () => {
@@ -46,13 +46,29 @@ const playerLose = (name) => {
     return loseTitle;
 }
 
+const playerWin = (name) => {
+    const loseTitle = createElementHTML("div", "loseTitle");
+    loseTitle.innerText = name + " Win";
+
+    return loseTitle;
+}
+
+const rundomNumber = (maxNum) => {  
+    return Math.ceil(Math.random() * maxNum);
+}
+
 const changeHP = (player) => {
     const playerLife = document.querySelector(".player" + player.player + " .life");
-    player.hp -= 20;
+    // console.log(rundomNumber(20));
+    player.hp -= rundomNumber(20);
+    if(player.hp < 0) {
+        player.hp = 0;
+    }
     playerLife.style.width = player.hp + "%";
 
     if(player.hp <= 0){
         arenas.appendChild(playerLose(player.name));
+        randomBtn.disabled = true;
     }
 }
 
